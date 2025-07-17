@@ -4,33 +4,33 @@ import codes from "../utils/codes.util.js";
 
 let helperPaths = `
 Public Routes
-GET    /api/v1/synergy/profile/:username
-POST   /api/v1/synergy/signup {userName, email, fullName, password, role}
-POST   /api/v1/synergy/signin {userName|email, password, role}
-GET     /api/v1/synergy/logout
-PATCH   /api/v1/synergy/edit {newEmail, newUserName, newFullName, newPassword}
-DELETE  /api/v1/synergy/delete
-POST    /api/v1/synergy/token-rotation
+GET    /api/v1/todo/profile/:username
+POST   /api/v1/todo/signup {userName, email, fullName, password, role}
+POST   /api/v1/todo/signin {userName|email, password, role}
+GET     /api/v1/todo/logout
+PATCH   /api/v1/todo/edit {newEmail, newUserName, newFullName, newPassword}
+DELETE  /api/v1/todo/delete
+POST    /api/v1/todo/token-rotation
 
 Admin Routes
-GET     /api/v1/synergy/admin/dashboard
-GET     /api/v1/synergy/admins/dashboard 
-PATCH   /api/v1/synergy/admin/edit {newEmail, newUserName, newFullName, newPassword}
-POST    /api/v1/synergy/admin/logout
-POST    /api/v1/synergy/admin/token-rotation
-POST   /api/v1/synergy/admin/signup {userName, email, fullName, password, role}
-POST   /api/v1/synergy/admin/signin {userName|email, password, role}
+GET     /api/v1/todo/admin/dashboard
+GET     /api/v1/todo/admins/dashboard 
+PATCH   /api/v1/todo/admin/edit {newEmail, newUserName, newFullName, newPassword}
+POST    /api/v1/todo/admin/logout
+POST    /api/v1/todo/admin/token-rotation
+POST   /api/v1/todo/admin/signup {userName, email, fullName, password, role}
+POST   /api/v1/todo/admin/signin {userName|email, password, role}
 
 Todo Routes
-POST    /api/v1/synergy/todo/add
-PATCH   /api/v1/synergy/todo/edit/:todoId
-DELETE  /api/v1/synergy/todo/delete/:todoId
+POST    /api/v1/todo/add
+PATCH   /api/v1/todo/edit/:todoId
+DELETE  /api/v1/todo/delete/:todoId
 
 Utility Routes
-POST    /api/v1/synergy/forgot-password {email}
-POST    /api/v1/synergy/verify-otp {email,otp}
-PATCH   /api/v1/synergy/change-password {email|userName, password}
-POST    /api/v1/synergy/issue {email,detail}
+POST    /api/v1/forgot-password {email}
+POST    /api/v1/verify-otp {email,otp}
+PATCH   /api/v1/change-password {email|userName, password}
+POST    /api/v1/issue {email,detail}
 `;
 
 let help = asyncHandler(async (req, res) => {
