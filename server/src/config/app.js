@@ -24,7 +24,7 @@ app.use(helmet());
 app.use(logger);
 
 // Base API path
-const baseRoute = "/api/v1/synergyHub";
+const baseRoute = "/api/v1/todoMongo";
 
 // Health check endpoint
 app.get(baseRoute, (req, res) => {

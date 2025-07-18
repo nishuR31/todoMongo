@@ -18,7 +18,7 @@ GET     /api/v1/todo/admins/dashboard
 PATCH   /api/v1/todo/admin/edit {newEmail, newUserName, newFullName, newPassword}
 POST    /api/v1/todo/admin/logout
 POST    /api/v1/todo/admin/token-rotation
-POST   /api/v1/todo/admin/signup {userName, email, fullName, password, role}
+POST   /api/v1/todo/admin/signup {userName, email, fullName, password}->
 POST   /api/v1/todo/admin/signin {userName|email, password, role}
 
 Todo Routes
