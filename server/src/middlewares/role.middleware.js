@@ -1,5 +1,5 @@
 import asyncHandler from "../utils/asyncHandler.util.js";
-import ApiErrorResponse from "../utils/ApiErrorResponse.util.js";
+import ApiErrorResponse from "../utils/apiErrorResponse.util.js";
 import codes from "../utils/codes.util.js";
 
 const role = (need = true, allowedRoles = []) =>
@@ -18,12 +18,9 @@ const role = (need = true, allowedRoles = []) =>
         : next(); // Public access route
     }
 
-    // Support both single string role or array of roles
-    const roles = Array.isArray(req.user.role)
-      ? req.user.role
-      : [req.user.role];
 
-    const userHasAccess = roles.some((role) => allowedRoles.includes(role));
+
+    const userHasAccess = req.user.role.some((role) => allowedRoles.includes(role));
 
     if (!userHasAccess) {
       return res

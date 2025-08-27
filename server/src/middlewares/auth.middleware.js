@@ -2,14 +2,13 @@ import asyncHandler from "../utils/asyncHandler.util.js";
 import User from "../models/user.model.js";
 import { verifyAccess, verifyRefresh } from "../utils/tokenization.util.js"; // use correct methods
 import codes from "../utils/codes.util.js";
-import ApiErrorResponse from "../utils/ApiErrorResponse.util.js";
+import ApiErrorResponse from "../utils/apiErrorResponse.util.js";
 
 const auth = (need = true) =>
   asyncHandler(async (req, res, next) => {
     req.user = null;
     let accessToken =
-      req.headers?.authorization?.split(" ")[1] ||
-      req.cookies?.accessToken;
+      req.headers?.authorization?.split(" ")[1] || req.cookies?.accessToken;
     let refreshToken = req.cookies?.refreshToken;
 
     if (!accessToken || !refreshToken) {

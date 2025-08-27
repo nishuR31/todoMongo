@@ -1,4 +1,4 @@
-import ApiErrorResponse from "./ApiErrorResponse.util.js";
+import ApiErrorResponse from "./apiErrorResponse.util.js";
 import codes from "./codes.util.js";
 
 let asyncHandler = (func) => async (req, res, next) => {
@@ -8,13 +8,13 @@ let asyncHandler = (func) => async (req, res, next) => {
     return res
       .status(codes.badRequest)
       .json(
-        new ApiErrorResponse (
+        new ApiErrorResponse(
           `Error occured : ${err.message || err}`,
           codes.badRequest,
           {},
           err
         ).res()
-      ); 
+      );
   }
 };
 

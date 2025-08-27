@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import mongoose from "mongoose";
 import required from "../utils/required.util.js";
-import { expiry } from "../utils/otp.util.js";
+import { expiry } from "../utils/OTP.util.js";
 import "../utils/config.env.util.js";
 
 const userSchema = new mongoose.Schema(
@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema(
       lowercase: true,
       trim: true,
     },
-    fullName: {
+    firstName: {
       type: String,
       trim: true,
     },
@@ -22,11 +22,12 @@ const userSchema = new mongoose.Schema(
       required: [true, required("email")],
       unique: true,
       lowercase: true,
+      trim: true,
     },
     password: {
       type: String,
       required: [true, required("password")],
-      select: false,
+      trim: true,
     },
     todos: [
       {
@@ -40,15 +41,11 @@ const userSchema = new mongoose.Schema(
       verified: { type: Boolean, default: false },
     },
     refreshToken: { type: String },
-    token: {
-      token: { type: String },
-      verified: { type: Boolean, default: false },
-    },
 
     role: {
-      type: String,
-      enum: ["user", "admin","superAdmin"],
-      default: "user",
+      type: [String],
+      enum: ["user", "admin", "superAdmin"],
+      default: ["user"],
     },
     isActive: {
       type: Boolean,
@@ -56,10 +53,6 @@ const userSchema = new mongoose.Schema(
     },
     lastLogin: {
       type: Date,
-    },
-    createdAt: {
-      type: Date,
-      default: Date.now,
     },
   },
   {

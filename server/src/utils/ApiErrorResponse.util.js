@@ -1,4 +1,4 @@
-import codes from "../utils/codes.util.js";
+import codes from "./codes.util.js";
 
 export default class ApiErrorResponse extends Error {
   constructor(
@@ -13,8 +13,8 @@ export default class ApiErrorResponse extends Error {
     this.success = false;
     this.stack = err.stack || Error.captureStackTrace(this, this.constructor);
   }
-  res(dev = true) { 
-    return { 
+  res(dev = true) {
+    return {
       message: this.message,
       success: this.success,
       code: this.code,

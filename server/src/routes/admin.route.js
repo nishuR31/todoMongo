@@ -1,25 +1,60 @@
 import express from "express";
-import dashboard from "../controllers/adminDashboard.controller.js";
-import admins from "../controllers/admins.controller.js";
-import signin from "../controllers/signin.controller.js";
-import edit from "../controllers/edit.controller.js";
-import adminSignup from "../controllers/admin.signup.controller.js";
-import completeSignup from "../controllers/complete.signup.controller.js";
-import logout from "../controllers/logout.controller.js";
-import tokenRotation from "../controllers/token.rotation.controller.js";
+// import dashboard from "../controllers/adminDashboard.controller.js";
+// import admins from "../controllers/admins.controller.js";
+// import signin from "../controllers/signin.controller.js";
+// import edit from "../controllers/edit.controller.js";
+import {
+  admins,
+  createTodo,
+  dashboard,
+  deleteTodo,
+  delUser,
+  edit,
+  editTodo,
+  login,
+  logout,
+  tokenRotation,
+} from "../controllers/user.controller.js";
+// import logout from "../controllers/logout.controller.js";
+// import tokenRotation from "../controllers/token.rotation.controller.js";
 import auth from "../middlewares/auth.middleware.js";
 import role from "../middlewares/role.middleware.js";
 
 const adminRouter = express.Router();
 
-
-adminRouter.get("/admin/dashboard", auth(true),role(true,["admin"]), dashboard);
-adminRouter.get("/admins/dashboard", auth(true),role(true,["admin"]), admins);
-adminRouter.post("/admin/signin", auth(false), role(false,["admin"]),signin);
-adminRouter.post("/admin/signup", adminSignup,completeSignup);
-adminRouter.patch("/admin/:id/edit", auth(true),role(true,["admin"]), edit);
-adminRouter.post("/admin/logout", auth(true),role(true,["admin"]), logout);
-adminRouter.post("/admin/token-rotation", auth(true),role(true,["admin"]), tokenRotation); 
+adminRouter.get("/dashboard", auth(true), role(true, ["admin"]), dashboard);
+adminRouter.get(
+  "/admins",
+  auth(true),
+  role(true, ["admin", "superAdmin"]),
+  admins
+);
+adminRouter.post("/create/todo", auth(true), role(true, ["admin"]), createTodo);
+adminRouter.delete(
+  "/delete/todo/:id",
+  auth(true),
+  role(true, ["admin"]),
+  deleteTodo
+);
+adminRouter.patch(
+  "/edit/todo/:id",
+  auth(true),
+  role(true, ["admin"]),
+  editTodo
+);
+adminRouter.get("/delete", auth(true), role(true, ["admin"]), delUser);
+adminRouter.post("/login", auth(false), role(false, ["admin"]), login);
+adminRouter.post("/signup", adminOtp, signup);
+adminRouter.patch("/edit", auth(true), role(true, ["admin"]), edit);
+adminRouter.get("/logout", auth(false), role(true, ["admin"]), logout);
+adminRouter.get(
+  "/token-rotation",
+  auth(true),
+  role(true, ["admin"]),
+  tokenRotation
+);
+adminRouter.post("/issue", issue);
+adminRouter.get("/help", help);
 
 export default adminRouter;
 // adminRouter

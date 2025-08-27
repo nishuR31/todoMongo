@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import required from "../utils/required.util.js";
 
-let status = ["pending", "in-progress", "completed", "canceled"];
+let status = ["pending", "in-progress", "completed"];
 let priority = ["low", "medium", "high"];
 const todoSchema = new mongoose.Schema(
   {
@@ -13,6 +13,7 @@ const todoSchema = new mongoose.Schema(
     description: {
       type: String,
       trim: true,
+      default:""
     },
     status: {
       type: String,
@@ -32,7 +33,7 @@ const todoSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    tags: [String],
+    // tags: [String],
   },
   {
     timestamps: true, // createdAt & updatedAt

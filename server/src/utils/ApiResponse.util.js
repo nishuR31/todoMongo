@@ -1,6 +1,6 @@
 // apiResponse
 
-import codes from "../utils/codes.util.js";
+import codes from "./codes.util.js";
 
 export default class ApiResponse {
   constructor(
@@ -14,8 +14,8 @@ export default class ApiResponse {
     this.success = true;
   }
 
-  res() { 
-    return { 
+  res() {
+    return {
       message: this.message,
       code: this.code,
       success: this.success,

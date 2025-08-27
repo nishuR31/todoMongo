@@ -5,12 +5,10 @@ import helmet from "helmet";
 import morgan from "morgan";
 import logger from "../utils/logger.util.js";
 import codes from "../utils/codes.util.js";
-import ApiErrorResponse from "../utils/ApiErrorResponse.util.js";
-import ApiResponse from "../utils/ApiResponse.util.js";
-import authRouter from "../routes/auth.route.js";
+import ApiErrorResponse from "../utils/apiErrorResponse.util.js";
+import ApiResponse from "../utils/apiResponse.util.js";
 import userRouter from "../routes/user.route.js";
 import adminRouter from "../routes/admin.route.js";
-import todoRouter from "../routes/todo.route.js";
 
 const app = express();
 
@@ -24,29 +22,35 @@ app.use(helmet());
 app.use(logger);
 
 // Base API path
-const baseRoute = "/api/v1/todoMongo";
+const baseRoute = "/api/v1/";
 
 // Health check endpoint
 app.get(baseRoute, (req, res) => {
-  res.status(codes.ok).json(
-    new ApiResponse(
-      `Server fired up from route : ${req.hostname}${req.originalUrl}`,
-      codes.ok
-    ).res()
-  );
+  res
+    .status(codes.ok)
+    .json(
+      new ApiResponse(
+        `Server fired up from route : ${req.hostname}${req.originalUrl}`,
+        codes.ok
+      ).res()
+    );
 });
 
 // Register routers
-app.use(baseRoute, authRouter);
-app.use(baseRoute, userRouter);
-app.use(baseRoute, adminRouter);
-app.use(baseRoute, todoRouter);
+app.use(`${baseRoute}/user`, userRouter);
+app.use(`${baseRoute}/admin`, adminRouter);
 
 // Catch-all for unmatched routes (Express 5 syntax)
 app.all(`${baseRoute}/{*splat}`, (req, res) => {
   res
     .status(codes.notFound)
-    .json(new ApiErrorResponse("Route not found or using wrong method", codes.notFound,{path:`${req.host}${req.url}`,method:req.method}).res());
+    .json(
+      new ApiErrorResponse(
+        "Route not found or using wrong method",
+        codes.notFound,
+        { path: `${req.host}${req.url}`, method: req.method }
+      ).res()
+    );
 });
 
 // Root route
@@ -57,18 +61,26 @@ app.get("/", (req, res) => {
 app.all(`/{*splat}`, (req, res) => {
   res
     .status(codes.notFound)
-    .json(new ApiErrorResponse("Route not found or using wrong method", codes.notFound,{path:`${req.host}${req.url}`,method:req.method}).res());
+    .json(
+      new ApiErrorResponse(
+        "Route not found or using wrong method",
+        codes.notFound,
+        { path: `${req.host}${req.url}`, method: req.method }
+      ).res()
+    );
 });
 // Global error handler
 app.use((err, req, res, next) => {
-  res.status(codes.internalServerError).json(
-    new ApiErrorResponse(
-      `Error occurred: ${err.message}`,
-      codes.internalServerError,
-      { Error: err },
-      err
-    ).res()
-  );
+  res
+    .status(codes.internalServerError)
+    .json(
+      new ApiErrorResponse(
+        `Error occurred: ${err.message}`,
+        codes.internalServerError,
+        { Error: err },
+        err
+      ).res()
+    );
 });
 
 export default app;
